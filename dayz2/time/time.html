@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+前时间距离2020年1月1日（新年）	还有<span id="t"></span>天<span id="s"></span>时<span id="f"></span>分<span id="m"></span>秒
+</body>
+<script type="text/javascript" src="jquery-1.8.3.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+    
+       setTimeout(time,1000);
+	})
+
+	function time(){
+		    $.ajax({
+              url:"time.php",
+              type:"get",
+              dataType:"json",
+              success:function(e){
+
+                 var end="2020/1/1 00:00:00";
+                 var obj=new Date(end);
+                 var hm=obj.getTime();
+                 var cha=(hm-e)/1000;
+                 var t,s,f,m;
+                 if(cha>0){
+                 	t=Math.floor(cha/60/60/24);
+                    s=Math.floor(cha/60/60%24);
+                    f=Math.floor(cha/60%60);
+                    m=Math.floor(cha%60);
+                 }
+                  $("#t").html(t);
+                   $("#s").html(s);
+                    $("#f").html(f);
+                     $("#m").html(m);
+
+                 setTimeout(time,1000);
+              }
+
+        })
+	}
+</script>
+</html>
